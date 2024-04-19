@@ -9,8 +9,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { useForm } from "@inertiajs/react";
-import { type FormEvent, useCallback } from "react";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import type { FormEvent } from "react";
 
 const Login = () => {
 	return (
@@ -21,8 +23,21 @@ const Login = () => {
 					Login to use the full potential of this site
 				</CardDescription>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="space-y-8">
 				<LoginForm />
+
+				<Separator />
+
+				<a href={route("github.redirect")} className="block">
+					<Button
+						variant="outline"
+						size="lg"
+						className="w-full space-x-3"
+					>
+						<GitHubLogoIcon className="size-4" />
+						<span>Login with Github</span>
+					</Button>
+				</a>
 			</CardContent>
 		</Card>
 	);
@@ -72,7 +87,7 @@ function LoginForm() {
 					</span>
 				)}
 			</div>
-			<Button className="w-full font-semibold" type="submit">
+			<Button className="w-full" type="submit">
 				Login
 			</Button>
 		</form>
