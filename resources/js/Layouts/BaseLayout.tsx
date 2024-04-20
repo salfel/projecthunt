@@ -55,6 +55,9 @@ function Dropdown() {
 							{page.props.auth.user.name}
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
+						<Link href={route("project.create")}>
+							<DropdownMenuItem>Create Project</DropdownMenuItem>
+						</Link>
 						<Link href={route("logout")} method="post">
 							<DropdownMenuItem>Logout</DropdownMenuItem>
 						</Link>

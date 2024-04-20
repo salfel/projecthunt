@@ -10,7 +10,6 @@ class ProjectRequest extends FormRequest
     {
         return [
             'repo' => ['required'],
-            'user_id' => ['required', 'exists:users'],
         ];
     }
 
