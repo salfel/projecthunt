@@ -28,12 +28,9 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 	function handleSubmit(e: FormEvent) {
 		e.preventDefault();
 
-		router.visit(route("project.store"), {
-			method: "post",
-			data: {
-				repo,
-				tags,
-			},
+		router.post(route("project.store"), {
+			repo,
+			tags,
 		});
 	}
 
