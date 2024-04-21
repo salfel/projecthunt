@@ -10,6 +10,7 @@ class Project extends Model
     protected $fillable = [
         'repo',
         'user_id',
+        'full_name',
     ];
 
     public function user(): BelongsTo
