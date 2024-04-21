@@ -37,9 +37,10 @@ class ProjectController extends Controller
         Gate::authorize('create', Project::class);
 
         $user = Auth::user();
+        $repo = null;
 
         try {
-            GitHub::repo()->show($user->github()['login'], $request->repo);
+            $repo = GitHub::repo()->show($user->github()['login'], $request->repo);
         } catch (RuntimeException $e) {
             return redirect()->route('project.create');
         }
@@ -47,14 +48,19 @@ class ProjectController extends Controller
         $project = Project::create([
             ...$request->validated(),
             'user_id' => $user->id,
+            'full_name' => $repo['full_name'],
         ]);
 
         return redirect()->route('project.show', [$project->id]);
     }
 
-    public function show(Project $project)
+    public function show(int $id)
     {
-        return $project;
+        $project = Project::with('user')->findOrFail($id);
+
+        return Inertia::render('Project/Show', [
+            'project' => $project,
+        ]);
     }
 
     public function update(ProjectRequest $request, Project $project)
