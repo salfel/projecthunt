@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
+use App\Models\Tag;
 use Github\Exception\RuntimeException;
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +39,6 @@ class ProjectController extends Controller
         Gate::authorize('create', Project::class);
 
         $user = Auth::user();
-        $repo = null;
 
         try {
             $repo = GitHub::repo()->show($user->github()['login'], $request->repo);
@@ -51,6 +51,9 @@ class ProjectController extends Controller
             'user_id' => $user->id,
             'full_name' => $repo['full_name'],
         ]);
+
+        $tags = Tag::whereIn('name', $request->tags)->get();
+        $project->tags()->attach($tags);
 
         return redirect()->route('project.show', [$project->id]);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProjectRequest extends FormRequest
 {
@@ -10,6 +11,7 @@ class ProjectRequest extends FormRequest
     {
         return [
             'repo' => ['required'],
+            'tags' => ['required', 'array', Rule::in(config('tags'))],
         ];
     }
 
