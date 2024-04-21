@@ -1,4 +1,5 @@
 import BaseLayout from "@/Layouts/BaseLayout";
+import TagsInput from "@/components/TagInput";
 import { Button } from "@/components/ui/button";
 import {
 	Select,
@@ -10,14 +11,19 @@ import {
 import type { PageProps } from "@/types";
 import { router } from "@inertiajs/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { atom, useAtomValue } from "jotai";
 import React, { type FormEvent, useState } from "react";
 
 interface Props extends PageProps {
 	repos: string[];
+	tags: string[];
 }
 
-const Create = ({ repos }: Props) => {
+const tagsAtom = atom([]);
+
+const Create = ({ repos, tags: defaultTags }: Props) => {
 	const [repo, setRepo] = useState(repos[0]);
+	const tags = useAtomValue(tagsAtom);
 
 	function handleSubmit(e: FormEvent) {
 		e.preventDefault();
@@ -26,6 +32,7 @@ const Create = ({ repos }: Props) => {
 			method: "post",
 			data: {
 				repo,
+				tags,
 			},
 		});
 	}
@@ -42,6 +49,8 @@ const Create = ({ repos }: Props) => {
 			<form onSubmit={handleSubmit} className="space-y-5">
 				<SelectRepo repos={repos} value={repo} onChange={setRepo} />
 
+				<TagsInput defaultTags={defaultTags} tagsAtom={tagsAtom} />
+
 				<Button type="submit">Create Project</Button>
 			</form>
 		</div>
@@ -55,7 +64,7 @@ function SelectRepo({
 }: { repos: string[]; value: string; onChange: (repo: string) => void }) {
 	return (
 		<Select onValueChange={onChange} defaultValue={value}>
-			<SelectTrigger className="w-72">
+			<SelectTrigger className="w-96">
 				<SelectValue placeholder="Github repo" />
 			</SelectTrigger>
 			<SelectContent>

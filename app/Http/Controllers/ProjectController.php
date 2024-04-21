@@ -29,6 +29,7 @@ class ProjectController extends Controller
 
         return Inertia::render('Project/Create', [
             'repos' => $repos,
+            'tags' => config('tags'),
         ]);
     }
 
