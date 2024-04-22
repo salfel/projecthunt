@@ -1,6 +1,7 @@
 import BaseLayout from "@/Layouts/BaseLayout";
 import TagsInput from "@/components/TagInput";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import {
 	Select,
@@ -28,6 +29,7 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 	const [description, setDescription] = useState("");
 	const tags = useAtomValue(tagsAtom);
 	const page = usePage();
+	const [useGithubDesc, setUseGithubDesc] = useState(false);
 
 	function handleSubmit(e: FormEvent) {
 		e.preventDefault();
@@ -36,6 +38,7 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 			name,
 			description,
 			tags,
+			useGithubDesc,
 		});
 	}
 
@@ -67,11 +70,28 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 
 					<div className="space-y-1">
 						<Label htmlFor="description">Description</Label>
-						<Textarea
-							id="description"
-							value={description}
-							onChange={(e) => setDescription(e.target.value)}
-						/>
+						{!useGithubDesc && (
+							<Textarea
+								id="description"
+								value={description}
+								onChange={(e) => setDescription(e.target.value)}
+							/>
+						)}
+
+						<div className="flex items-center gap-2 !mt-3 !mb-2">
+							<Checkbox
+								id="useGithubDesc"
+								checked={useGithubDesc}
+								onCheckedChange={(checked) =>
+									setUseGithubDesc(!!checked)
+								}
+							/>
+
+							<Label htmlFor="useGithubDesc">
+								Use Github description
+							</Label>
+						</div>
+
 						{page.props.errors.description && (
 							<span className="text-red-500 text-sm">
 								{page.props.errors.description}

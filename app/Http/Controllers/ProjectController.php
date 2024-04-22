@@ -46,11 +46,22 @@ class ProjectController extends Controller
             return redirect()->route('project.create');
         }
 
-        $project = Project::create([
+        $data = [
             ...$request->validated(),
             'user_id' => $user->id,
             'full_name' => $repo['full_name'],
-        ]);
+        ];
+
+        if ($request->useGithubDesc) {
+            if ($repo['description'] === null || strlen($repo['description']) <= 16) {
+                return redirect()->route('project.create')->withErrors([
+                    'description' => 'Please provide a description as the repository does not contain a valid description',
+                ]);
+            }
+            $data['description'] = $repo['description'];
+        }
+
+        $project = Project::create($data);
 
         $tags = Tag::whereIn('name', $request->tags)->get();
         $project->tags()->attach($tags);
