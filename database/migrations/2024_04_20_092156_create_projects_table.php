@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('repo');
+            $table->string('name');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });

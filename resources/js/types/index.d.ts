@@ -7,7 +7,7 @@ export interface User {
 
 export interface Project {
 	id: number;
-	repo: string;
+	name: string;
 	full_name: string;
 	user?: User;
 }

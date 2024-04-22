@@ -10,7 +10,7 @@ class ProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'repo' => ['required'],
+            'name' => ['required'],
             'tags' => ['required', 'array', Rule::in(config('tags'))],
         ];
     }
