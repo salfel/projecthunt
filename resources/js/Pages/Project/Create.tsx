@@ -39,16 +39,6 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 	}
 
 	return (
-		<div className="space-y-6">
-			<div className="space-y-2">
-				<h1 className="text-xl font-semibold">Create Project</h1>
-				<p className="w-[60ch] text-zinc-200">
-					Select a Github repository to create a new project and share
-					the project with people all over the world
-				</p>
-			</div>
-			<form onSubmit={handleSubmit} className="space-y-5">
-				<SelectRepo repos={repos} value={repo} onChange={setRepo} />
 		<>
 			<Head title="Create Project" />
 			<div className="space-y-6">
@@ -74,6 +64,19 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 						)}
 					</div>
 
+					<div className="space-y-1">
+						<Label htmlFor="description">Description</Label>
+						<Textarea
+							id="description"
+							value={description}
+							onChange={(e) => setDescription(e.target.value)}
+						/>
+						{page.props.errors.description && (
+							<span className="text-red-500 text-sm">
+								{page.props.errors.description}
+							</span>
+						)}
+					</div>
 
 					<div className="space-y-1">
 						<Label htmlFor="tags">Tags</Label>
