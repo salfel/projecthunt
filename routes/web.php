@@ -27,6 +27,10 @@ Route::prefix('project')->group(function () {
 
     Route::get('/{id}', [ProjectController::class, 'show'])
         ->name('project.show');
+
+    Route::post('{project}/star', [ProjectController::class, 'star'])
+        ->middleware('auth')
+        ->name('project.star');
 });
 
 require __DIR__.'/auth.php';

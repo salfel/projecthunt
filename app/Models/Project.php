@@ -38,4 +38,9 @@ class Project extends Model
     {
         return $this->belongsToMany(User::class, 'stars');
     }
+
+    public function isStarred(int $userId): bool
+    {
+        return $this->starred()->where('user_id', $userId)->exists();
+    }
 }
