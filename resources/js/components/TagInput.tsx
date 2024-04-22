@@ -19,7 +19,7 @@ type Props = {
 
 export default function TagInput({ defaultTags, tagsAtom }: Props) {
 	return (
-		<div className="space-y-4">
+		<div>
 			<TagCommand defaultTags={defaultTags} tagsAtom={tagsAtom} />
 
 			<BadgeList tagsAtom={tagsAtom} />
@@ -68,6 +68,7 @@ function TagCommand({
 			ref={command}
 		>
 			<CommandInput
+				id="tags"
 				value={value}
 				onFocus={() => setOpen(true)}
 				onValueChange={(value) => {
@@ -113,17 +114,19 @@ function BadgeList({
 	const [tags, setTags] = useAtom(tagsAtom);
 
 	return (
-		<div className="flex flex-wrap gap-1 w-96">
-			{tags.map((tag) => (
-				<Badge
-					key={tag}
-					onClick={() => setTags(tags.filter((t) => t !== tag))}
-					className="cursor-pointer"
-					variant="secondary"
-				>
-					{tag}
-				</Badge>
-			))}
-		</div>
+		tags.length > 0 && (
+			<div className="flex flex-wrap gap-1 w-96 mt-4">
+				{tags.map((tag) => (
+					<Badge
+						key={tag}
+						onClick={() => setTags(tags.filter((t) => t !== tag))}
+						className="cursor-pointer"
+						variant="secondary"
+					>
+						{tag}
+					</Badge>
+				))}
+			</div>
+		)
 	);
 }
