@@ -1,7 +1,9 @@
 import BaseLayout from "@/Layouts/BaseLayout";
-import FileTree from "@/components/FileTree";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import type { PageProps, Project } from "@/types";
+import { Head, Link } from "@inertiajs/react";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import React from "react";
 
 interface Props extends PageProps {
@@ -10,24 +12,26 @@ interface Props extends PageProps {
 
 const Show = ({ project }: Props) => {
 	return (
-		<Tabs defaultValue="Details">
-			<TabsList className="w-full">
-				<TabsTrigger className="flex-1" value="Details">
-					Details
-				</TabsTrigger>
-				<TabsTrigger className="flex-1" value="Files">
-					Files
-				</TabsTrigger>
-				<TabsTrigger className="flex-1" value="Installation">
-					Installation
-				</TabsTrigger>
-			</TabsList>
-			<TabsContent value="Details">details</TabsContent>
-			<TabsContent value="Files">
-				<FileTree project={project} />
-			</TabsContent>
-			<TabsContent value="Installation">Installation</TabsContent>
-		</Tabs>
+		<>
+			<Head title={project.full_name} />
+
+			<div className="relative space-y-6">
+				<div className="space-y-1">
+					<h1 className="text-2xl font-semibold">{project.name}</h1>
+					<p className="text-lg text-zinc-800 dark:text-zinc-200">
+						{project.description}
+					</p>
+				</div>
+
+				<Separator />
+
+				<div className="flex flex-wrap gap-1">
+					{project.tags.map((tag) => (
+						<Badge key={tag.id}>{tag.name}</Badge>
+					))}
+				</div>
+			</div>
+		</>
 	);
 };
 

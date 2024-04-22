@@ -9,7 +9,14 @@ export interface Project {
 	id: number;
 	name: string;
 	full_name: string;
+	description: string;
 	user?: User;
+	tags: Tag[];
+}
+
+export interface Tag {
+	id: number;
+	name: string;
 }
 
 type File = {
