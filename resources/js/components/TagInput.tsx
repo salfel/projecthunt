@@ -44,7 +44,6 @@ function TagCommand({
 			// @ts-ignore
 			if (open && !command.current?.contains(event.target)) {
 				setOpen(false);
-				console.log("clicked ");
 			}
 		}
 

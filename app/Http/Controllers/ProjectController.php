@@ -41,7 +41,7 @@ class ProjectController extends Controller
         $user = Auth::user();
 
         try {
-            $repo = GitHub::repo()->show($user->github()['login'], $request->repo);
+            $repo = GitHub::repo()->show($user->github()['login'], $request->name);
         } catch (RuntimeException $e) {
             return redirect()->route('project.create');
         }

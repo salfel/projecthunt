@@ -12,7 +12,7 @@ class FileController extends Controller
     {
         $user = explode('/', $project->full_name)[0];
 
-        return GitHub::repo()->contents()->show($user, $project->repo, $path);
+        return GitHub::repo()->contents()->show($user, $project->name, $path);
     }
 
     public function show(Project $project, ?string $path = null)
@@ -21,6 +21,6 @@ class FileController extends Controller
 
         Log::info('file', [$path]);
 
-        return GitHub::repo()->contents()->download($user, $project->repo, $path);
+        return GitHub::repo()->contents()->download($user, $project->name, $path);
     }
 }

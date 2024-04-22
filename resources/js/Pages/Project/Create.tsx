@@ -33,7 +33,8 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 		e.preventDefault();
 
 		router.post(route("project.store"), {
-			repo: name,
+			name,
+			description,
 			tags,
 		});
 	}
