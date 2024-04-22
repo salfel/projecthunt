@@ -26,8 +26,16 @@ class Project extends Model
     /**
      * @return BelongsToMany<Tag>
      */
-    public function Tags(): BelongsToMany
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * @return BelongsToMany<User>
+     */
+    public function starred(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'stars');
     }
 }
