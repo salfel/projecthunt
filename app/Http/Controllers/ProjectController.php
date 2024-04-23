@@ -66,6 +66,8 @@ class ProjectController extends Controller
         $tags = Tag::whereIn('name', $request->tags)->get();
         $project->tags()->attach($tags);
 
+        $project->refresh()->searchable();
+
         return redirect()->route('project.show', [$project->id]);
     }
 
