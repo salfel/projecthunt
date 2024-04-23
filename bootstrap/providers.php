@@ -1,6 +1,11 @@
 <?php
 
-return [
+$providers = [
     App\Providers\AppServiceProvider::class,
-    App\Providers\TelescopeServiceProvider::class,
 ];
+
+if (! app()->isProduction()) {
+    $providers[] = App\Providers\TelescopeServiceProvider::class;
+}
+
+return $providers;
