@@ -1,5 +1,5 @@
 import BaseLayout from "@/Layouts/BaseLayout";
-import { Badge } from "@/components/ui/badge";
+import BadgeList from "@/components/BadgeList";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import type { PageProps, Project } from "@/types";
@@ -31,11 +31,7 @@ const Show = ({ project, starred }: Props) => {
 
 				<Separator />
 
-				<div className="flex flex-wrap gap-1">
-					{project.tags.map((tag) => (
-						<Badge key={tag.id}>{tag.name}</Badge>
-					))}
-				</div>
+				<BadgeList tags={project.tags} />
 
 				<ProjectActions project={project} starred={starred} />
 			</div>
