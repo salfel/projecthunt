@@ -30,7 +30,7 @@ class Project extends Model
             'name' => $this->name,
             'description' => $this->description,
             'owner' => $this->user->toArray(),
-            'tags' => $this->tags->pluck('name')->toArray(),
+            'tags' => $this->tags->toArray(),
         ];
     }
 

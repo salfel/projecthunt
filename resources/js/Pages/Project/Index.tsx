@@ -1,21 +1,11 @@
 import BaseLayout from "@/Layouts/BaseLayout";
-import TagList from "@/components/TagList";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import ProjectPreview from "@/components/ProjectPreview";
 import { Input } from "@/components/ui/input";
 import { useSearchParam } from "@/lib/hooks";
 import { setURLSearchParam } from "@/lib/utils";
 import type { Project } from "@/types";
-import { Link } from "@inertiajs/react";
 import algoliasearch from "algoliasearch";
 import "instantsearch.css/themes/reset.css";
-import type { Hit } from "instantsearch.js";
-import type { SendEventForHits } from "instantsearch.js/es/lib/utils";
 import { X } from "lucide-react";
 import { useEffect } from "react";
 import { Hits, InstantSearch, useSearchBox } from "react-instantsearch";
@@ -49,7 +39,9 @@ const Index = () => {
 					classNames={{
 						list: "grid grid-cols-2 gap-5",
 					}}
-					hitComponent={ProjectPreview}
+					hitComponent={({ hit }) => (
+						<ProjectPreview project={hit as Project} />
+					)}
 				/>
 			</div>
 		</InstantSearch>
@@ -89,30 +81,6 @@ function SearchBox() {
 				</button>
 			)}
 		</div>
-	);
-}
-
-interface ProjectPreviewProps {
-	hit: Hit<{ tags: string[] } & Project>;
-	sendEvent: SendEventForHits;
-}
-
-function ProjectPreview({ hit: project }: ProjectPreviewProps) {
-	let id = 0;
-	return (
-		<Card className="h-full">
-			<CardHeader>
-				<Link href={route("project.show", [project.id])}>
-					<CardTitle>{project.name}</CardTitle>
-				</Link>
-				<CardDescription>{project.description}</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<TagList
-					tags={project.tags.map((tag) => ({ id: id++, name: tag }))}
-				/>
-			</CardContent>
-		</Card>
 	);
 }
 
