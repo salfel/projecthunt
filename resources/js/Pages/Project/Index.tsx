@@ -7,13 +7,18 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useSearchParam } from "@/lib/hooks";
+import { setURLSearchParam } from "@/lib/utils";
 import type { Project } from "@/types";
 import { Link } from "@inertiajs/react";
 import algoliasearch from "algoliasearch";
 import "instantsearch.css/themes/reset.css";
 import type { Hit } from "instantsearch.js";
 import type { SendEventForHits } from "instantsearch.js/es/lib/utils";
-import { Hits, InstantSearch, SearchBox } from "react-instantsearch";
+import { X } from "lucide-react";
+import { useEffect } from "react";
+import { Hits, InstantSearch, useSearchBox } from "react-instantsearch";
 
 const searchClient = algoliasearch(
 	import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -22,24 +27,70 @@ const searchClient = algoliasearch(
 );
 
 const Index = () => {
-	return (
-		<InstantSearch indexName="projects" searchClient={searchClient}>
-			<SearchBox
-				classNames={{
-					input: "flex h-9 w-full rounded-md border border-zinc-200 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-800 dark:placeholder:text-zinc-400 dark:focus-visible:ring-zinc-300",
-				}}
-				placeholder="Search projects"
-			/>
+	const query = useSearchParam("q");
 
-			<Hits
-				classNames={{
-					list: "space-y-5",
-				}}
-				hitComponent={ProjectPreview}
-			/>
+	return (
+		<InstantSearch
+			indexName="projects"
+			searchClient={searchClient}
+			initialUiState={{
+				projects: {
+					query,
+				},
+			}}
+			future={{
+				preserveSharedStateOnUnmount: true,
+			}}
+		>
+			<div className="space-y-5">
+				<SearchBox />
+
+				<Hits
+					classNames={{
+						list: "grid grid-cols-2 gap-5",
+					}}
+					hitComponent={ProjectPreview}
+				/>
+			</div>
 		</InstantSearch>
 	);
 };
+
+function SearchBox() {
+	const { query, refine } = useSearchBox();
+
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		refine(params.get("q") ?? "");
+	}, [refine]);
+
+	function search(value: string) {
+		setURLSearchParam("q", value);
+
+		refine(value);
+	}
+
+	return (
+		<div className="relative group">
+			<Input
+				className="px-4 h-12 text-lg font-medium"
+				value={query}
+				onChange={(e) => search(e.target.value)}
+				placeholder="Search for project..."
+			/>
+
+			{query !== "" && (
+				<button
+					type="button"
+					className="absolute top-0 right-3 hidden group-hover:flex items-center h-full"
+					onClick={() => search("")}
+				>
+					<X className="size-4" />
+				</button>
+			)}
+		</div>
+	);
+}
 
 interface ProjectPreviewProps {
 	hit: Hit<{ tags: string[] } & Project>;
@@ -49,7 +100,7 @@ interface ProjectPreviewProps {
 function ProjectPreview({ hit: project }: ProjectPreviewProps) {
 	let id = 0;
 	return (
-		<Card>
+		<Card className="h-full">
 			<CardHeader>
 				<Link href={route("project.show", [project.id])}>
 					<CardTitle>{project.name}</CardTitle>

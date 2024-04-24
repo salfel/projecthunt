@@ -5,16 +5,19 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function updateSearchParam(key, value) {
-	if (typeof window !== "undefined") {
-		const params = new URLSearchParams(window.location.search);
-		params.set(key, value);
+export function setURLSearchParam(key: string, value: string) {
+	let path = window.location.pathname;
 
-		// Update the URL without causing a navigation event
-		window.history.pushState(
-			{},
-			"",
-			`${window.location.pathname}?${params}`,
-		);
+	const params = new URLSearchParams(window.location.search);
+	if (value === "") {
+		params.delete(key);
+	} else {
+		params.set(key, value);
 	}
+
+	if (params.size) {
+		path += `?${params}`;
+	}
+
+	window.history.pushState({}, "", path);
 }
