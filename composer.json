@@ -14,6 +14,7 @@
         "laravel/socialite": "^5.13",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.9",
+        "laravel/vapor-core": "^2.37",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
