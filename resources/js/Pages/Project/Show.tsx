@@ -1,5 +1,5 @@
 import BaseLayout from "@/Layouts/BaseLayout";
-import BadgeList from "@/components/BadgeList";
+import TagList from "@/components/TagList";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import type { PageProps, Project } from "@/types";
@@ -31,7 +31,7 @@ const Show = ({ project, starred }: Props) => {
 
 				<Separator />
 
-				<BadgeList tags={project.tags} />
+				<TagList tags={project.tags} />
 
 				<ProjectActions project={project} starred={starred} />
 			</div>

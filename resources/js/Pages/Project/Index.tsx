@@ -1,5 +1,5 @@
 import BaseLayout from "@/Layouts/BaseLayout";
-import BadgeList from "@/components/BadgeList";
+import TagList from "@/components/TagList";
 import {
 	Card,
 	CardContent,
@@ -108,7 +108,7 @@ function ProjectPreview({ hit: project }: ProjectPreviewProps) {
 				<CardDescription>{project.description}</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<BadgeList
+				<TagList
 					tags={project.tags.map((tag) => ({ id: id++, name: tag }))}
 				/>
 			</CardContent>
