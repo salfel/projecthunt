@@ -27,6 +27,7 @@ class GithubController extends Controller
         ], [
             'name' => $githubUser->name,
             'email' => $githubUser->email,
+            'avatar_url' => $githubUser->user['avatar_url'],
             'github_token' => $githubUser->token,
             'github_refresh_token' => $githubUser->refreshToken,
         ]);
