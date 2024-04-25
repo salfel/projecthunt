@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useSearchParam } from "@/lib/hooks";
 import { setURLSearchParam } from "@/lib/utils";
 import type { Project } from "@/types";
+import { Head } from "@inertiajs/react";
 import algoliasearch from "algoliasearch";
 import "instantsearch.css/themes/reset.css";
 import { X } from "lucide-react";
@@ -26,34 +27,37 @@ const Index = () => {
 	const query = useSearchParam("q");
 
 	return (
-		<InstantSearch
-			indexName="projects"
-			searchClient={searchClient}
-			initialUiState={{
-				projects: {
-					query,
-				},
-			}}
-			future={{
-				preserveSharedStateOnUnmount: true,
-			}}
-		>
-			<Configure hitsPerPage={12} />
-			<div className="flex-1 flex flex-col gap-5">
-				<SearchBox />
+		<>
+			<Head title={"Search projects"} />
+			<InstantSearch
+				indexName="projects"
+				searchClient={searchClient}
+				initialUiState={{
+					projects: {
+						query,
+					},
+				}}
+				future={{
+					preserveSharedStateOnUnmount: true,
+				}}
+			>
+				<Configure hitsPerPage={12} />
+				<div className="flex-1 flex flex-col gap-5">
+					<SearchBox />
 
-				<Hits
-					classNames={{
-						list: "grid grid-cols-2 gap-5",
-					}}
-					hitComponent={({ hit }) => (
-						<ProjectPreview project={hit as Project} />
-					)}
-				/>
-			</div>
+					<Hits
+						classNames={{
+							list: "grid grid-cols-2 gap-5",
+						}}
+						hitComponent={({ hit }) => (
+							<ProjectPreview project={hit as Project} />
+						)}
+					/>
+				</div>
 
-			<AlgoliaPaginator />
-		</InstantSearch>
+				<AlgoliaPaginator />
+			</InstantSearch>
+		</>
 	);
 };
 
