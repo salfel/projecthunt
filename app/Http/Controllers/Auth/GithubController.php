@@ -5,13 +5,17 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 
 class GithubController extends Controller
 {
-    public function redirect(): RedirectResponse
+    public function redirect(Request $request): RedirectResponse
     {
+        Session::put('url.intended', $request->query('intended', 'home'));
+
         return Socialite::driver('github')
             ->scopes(['read:user', 'public_repo'])
             ->redirect();
@@ -34,6 +38,6 @@ class GithubController extends Controller
 
         Auth::login($user, true);
 
-        return redirect()->route('home');
+        return redirect()->intended(route('home'));
     }
 }
