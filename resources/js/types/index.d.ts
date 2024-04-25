@@ -5,6 +5,7 @@ export interface User {
 	email_verified_at: string;
 	avatar_url: string;
 	github_id: number;
+	hasPassword: string;
 }
 
 export interface Project {

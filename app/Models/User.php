@@ -29,6 +29,10 @@ class User extends Authenticatable
         'is_github_username',
     ];
 
+    protected $appends = [
+        'hasPassword',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -79,5 +83,10 @@ class User extends Authenticatable
     public function starred(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'stars');
+    }
+
+    protected function getHasPasswordAttribute(): bool
+    {
+        return ! is_null($this->password);
     }
 }

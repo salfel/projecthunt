@@ -1,5 +1,6 @@
 import BaseLayout from "@/Layouts/BaseLayout";
 import UpdateGithub from "@/Pages/Profile/Partials/UpdateGithub";
+import UpdatePassword from "@/Pages/Profile/Partials/UpdatePassword";
 import { UpdateProfileInformationForm } from "@/Pages/Profile/Partials/UpdateProfileInformationForm";
 import { Head } from "@inertiajs/react";
 
@@ -10,6 +11,7 @@ const Edit = () => {
 			<div className="space-y-8">
 				<UpdateProfileInformationForm />
 				<UpdateGithub />
+				<UpdatePassword />
 			</div>
 		</>
 	);

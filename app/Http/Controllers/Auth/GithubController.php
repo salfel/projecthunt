@@ -14,7 +14,7 @@ class GithubController extends Controller
 {
     public function redirect(Request $request): RedirectResponse
     {
-        Session::put('url.intended', $request->query('intended', 'home'));
+        Session::put('url.intended', $request->query('intended', route('home')));
 
         return Socialite::driver('github')
             ->scopes(['read:user', 'public_repo'])
