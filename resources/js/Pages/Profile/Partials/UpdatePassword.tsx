@@ -1,3 +1,4 @@
+import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -6,8 +7,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useUser } from "@/lib/hooks";
 import { useForm } from "@inertiajs/react";
 import type { FormEvent } from "react";
@@ -57,59 +56,29 @@ function UpdatePasswordForm() {
 
 	return (
 		<form className="space-y-5" onSubmit={handleSubmit}>
-			<div className="space-y-1">
-				<Label htmlFor="current_password">Current Password</Label>
-				<Input
-					id="current_password"
-					type="password"
-					value={data.current_password}
-					onChange={(e) =>
-						setData({ ...data, current_password: e.target.value })
-					}
-				/>
-				{errors.current_password && (
-					<span className="text-red-500 text-sm">
-						{errors.current_password}
-					</span>
-				)}
-			</div>
-			<div className="space-y-1">
-				<Label htmlFor="password">New Password</Label>
-				<Input
-					id="password"
-					type="password"
-					value={data.password}
-					onChange={(e) =>
-						setData({ ...data, password: e.target.value })
-					}
-				/>
-				{errors.password && (
-					<span className="text-red-500 text-sm">
-						{errors.password}
-					</span>
-				)}
-			</div>
-			<div className="space-y-1">
-				<Label htmlFor="password_confirmation">
-					Confirm new Password
-				</Label>
-				<Input
-					id="password_confirmation"
-					type="password"
-					value={data.password_confirmation}
-					onChange={(e) =>
-						setData({
-							...data,
-							password_confirmation: e.target.value,
-						})
-					}
-				/>
-				{errors.password_confirmation && (
-					<span className="text-red-500 text-sm">
-						{errors.password_confirmation}
-					</span>
-				)}
-			</div>
+			<FormField
+				id="current_password"
+				label="Current Password"
+				value={data.current_password}
+				setData={setData}
+				error={errors.current_password}
+			/>
+
+			<FormField
+				id="password"
+				label="New Password"
+				value={data.password}
+				setData={setData}
+				error={errors.password}
+			/>
+
+			<FormField
+				id="password_confirmation"
+				label="Confirm Password"
+				value={data.password_confirmation}
+				setData={setData}
+				error={errors.password_confirmation}
+			/>
 
 			<Button type="submit">Update Password</Button>
 		</form>

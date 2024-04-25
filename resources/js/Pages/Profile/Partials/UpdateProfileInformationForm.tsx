@@ -1,3 +1,4 @@
+import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -6,8 +7,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useUser } from "@/lib/hooks";
 import { useForm } from "@inertiajs/react";
 import type { FormEvent } from "react";
@@ -44,32 +43,21 @@ function ProfileInformationForm() {
 
 	return (
 		<form className="space-y-5" onSubmit={handleSubmit}>
-			<div className="space-y-1">
-				<Label htmlFor="name">Name</Label>
-				<Input
-					id="name"
-					value={data.name}
-					onChange={(e) => setData({ ...data, name: e.target.value })}
-				/>
-				{errors.name && (
-					<span className="text-red-500 text-sm">{errors.name}</span>
-				)}
-			</div>
+			<FormField
+				id="name"
+				label="Name"
+				value={data.name}
+				setData={setData}
+				error={errors.name}
+			/>
 
-			<div className="space-y-1">
-				<Label htmlFor="email">Email</Label>
-				<Input
-					id="email"
-					value={data.email}
-					onChange={(e) =>
-						setData({ ...data, email: e.target.value })
-					}
-					disabled={user.github_id !== null}
-				/>
-				{errors.email && (
-					<span className="text-red-500 text-sm">{errors.email}</span>
-				)}
-			</div>
+			<FormField
+				id="email"
+				label="Email"
+				value={data.email}
+				setData={setData}
+				error={errors.email}
+			/>
 
 			<Button type="submit">Update Profile</Button>
 		</form>
