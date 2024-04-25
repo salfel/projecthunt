@@ -34,7 +34,7 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 	function handleSubmit(e: FormEvent) {
 		e.preventDefault();
 
-		router.post(route("project.store"), {
+		router.post(route("projects.store"), {
 			name,
 			description,
 			tags,
@@ -122,7 +122,6 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 
 function SelectRepo({
 	repos,
-	value,
 	onChange,
 }: { repos: string[]; value: string; onChange: (repo: string) => void }) {
 	return (

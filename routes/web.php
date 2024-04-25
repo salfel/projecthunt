@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)
     ->name('home');
 
-Route::resource('project', ProjectController::class)
+Route::resource('projects', ProjectController::class)
     ->middleware(['create' => 'auth']);
 
-Route::post('project/{project}/star', [ProjectController::class, 'star'])
+Route::post('projects/{project}/star', [ProjectController::class, 'star'])
     ->middleware('auth')
-    ->name('project.star');
+    ->name('projects.star');
 
 Route::prefix('profile')->middleware('auth')->group(function () {
     Route::get('/', [ProfileController::class, 'edit'])

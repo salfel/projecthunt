@@ -9,7 +9,7 @@ export default function TagList({ tags }: { tags: Tag[] }) {
 			{tags.map((tag) => (
 				<Link
 					key={tag.id}
-					href={`${route("project.index")}?q=${encodeURIComponent(
+					href={`${route("projects.index")}?q=${encodeURIComponent(
 						tag.name,
 					)}`}
 				>

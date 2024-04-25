@@ -21,7 +21,7 @@ export default function Header() {
 
 				<div className="flex items-center gap-8">
 					<Link
-						href={route("project.index")}
+						href={route("projects.index")}
 						className="text-lg font-semibold"
 					>
 						Discover
@@ -58,7 +58,7 @@ function Dropdown() {
 						<Link href={route("profile.edit")}>
 							<DropdownMenuItem>Profile</DropdownMenuItem>
 						</Link>
-						<Link href={route("project.create")}>
+						<Link href={route("projects.create")}>
 							<DropdownMenuItem>Create Project</DropdownMenuItem>
 						</Link>
 						<DropdownMenuSeparator />

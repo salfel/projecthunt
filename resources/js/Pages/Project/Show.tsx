@@ -46,7 +46,7 @@ function ProjectActions({
 	return (
 		<div className="absolute top-0 right-5 !m-0 flex items-center gap-1">
 			<Link
-				href={route("project.star", [project.id])}
+				href={route("projects.star", [project.id])}
 				method="post"
 				as="button"
 				size="icon"

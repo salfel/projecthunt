@@ -13,7 +13,7 @@ export default function ProjectPreview({ project }: { project: Project }) {
 	return (
 		<Card className="h-full">
 			<CardHeader>
-				<Link href={route("project.show", [project.id])}>
+				<Link href={route("projects.show", [project.id])}>
 					<CardTitle>{project.name}</CardTitle>
 				</Link>
 				<CardDescription>{project.description}</CardDescription>

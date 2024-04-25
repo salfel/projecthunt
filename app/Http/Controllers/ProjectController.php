@@ -44,7 +44,7 @@ class ProjectController extends Controller
         try {
             $repo = GitHub::repo()->show($user->github()['login'], $request->name);
         } catch (RuntimeException $e) {
-            return redirect()->route('project.create');
+            return redirect()->route('projects.create');
         }
 
         $data = [
@@ -55,7 +55,7 @@ class ProjectController extends Controller
 
         if ($request->useGithubDesc) {
             if ($repo['description'] === null || strlen($repo['description']) <= 16) {
-                return redirect()->route('project.create')->withErrors([
+                return redirect()->route('projects.create')->withErrors([
                     'description' => 'Please provide a description as the repository does not contain a valid description',
                 ]);
             }
@@ -69,7 +69,7 @@ class ProjectController extends Controller
 
         $project->refresh()->searchable();
 
-        return redirect()->route('project.show', [$project->id]);
+        return redirect()->route('projects.show', [$project->id]);
     }
 
     public function show(int $id): Response
@@ -92,7 +92,7 @@ class ProjectController extends Controller
             $project->starred()->attach(Auth::id());
         }
 
-        return redirect()->route('project.show', [$project->id]);
+        return redirect()->route('projects.show', [$project->id]);
     }
 
     public function update(ProjectRequest $request, Project $project)
