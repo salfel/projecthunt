@@ -1,4 +1,5 @@
 import BaseLayout from "@/Layouts/BaseLayout";
+import DeleteUser from "@/Pages/Profile/Partials/DeleteUser";
 import UpdateGithub from "@/Pages/Profile/Partials/UpdateGithub";
 import UpdatePassword from "@/Pages/Profile/Partials/UpdatePassword";
 import { UpdateProfileInformationForm } from "@/Pages/Profile/Partials/UpdateProfileInformationForm";
@@ -12,6 +13,7 @@ const Edit = () => {
 				<UpdateProfileInformationForm />
 				<UpdateGithub />
 				<UpdatePassword />
+				<DeleteUser />
 			</div>
 		</>
 	);
