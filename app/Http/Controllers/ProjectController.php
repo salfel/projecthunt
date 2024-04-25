@@ -8,6 +8,7 @@ use App\Models\Tag;
 use Github\Exception\RuntimeException;
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -15,9 +16,9 @@ use Inertia\Response;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Project::all();
+        return Inertia::render('Project/Index');
     }
 
     public function create(): Response
@@ -65,6 +66,8 @@ class ProjectController extends Controller
 
         $tags = Tag::whereIn('name', $request->tags)->get();
         $project->tags()->attach($tags);
+
+        $project->refresh()->searchable();
 
         return redirect()->route('project.show', [$project->id]);
     }

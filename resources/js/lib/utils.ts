@@ -1,4 +1,3 @@
-import type { File } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -6,14 +5,19 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function sortFiles(files: File[]): File[] {
-	return files.sort((a, b) => {
-		if (a.type === "dir" && b.type === "file") {
-			return -1;
-		}
-		if (b.type === "dir" && a.type === "file") {
-			return 1;
-		}
-		return 0;
-	});
+export function setURLSearchParam(key: string, value: string) {
+	let path = window.location.pathname;
+
+	const params = new URLSearchParams(window.location.search);
+	if (value === "") {
+		params.delete(key);
+	} else {
+		params.set(key, value);
+	}
+
+	if (params.size) {
+		path += `?${params}`;
+	}
+
+	window.history.pushState({}, "", path);
 }
