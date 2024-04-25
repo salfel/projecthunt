@@ -33,6 +33,10 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
+        $request->session()->flash('toast', [
+            'title' => 'Updated Profile successfully',
+        ]);
+
         return Redirect::route('profile.edit');
     }
 
