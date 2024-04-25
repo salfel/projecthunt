@@ -26,6 +26,23 @@ class GithubController extends Controller
         $githubUser = Socialite::driver('github')
             ->user();
 
+        if (Auth::check()) {
+            if (User::where('github_id', $githubUser->id)->exists()) {
+                Session::flash('toast', ['type' => 'destructive', 'title' => 'This Github account is already in use', 'description' => 'Please use another Github account']);
+
+                return redirect()->intended(route('home'));
+            }
+
+            Auth::user()->update([
+                'avatar_url' => $githubUser->user['avatar_url'],
+                'github_id' => $githubUser->id,
+                'github_token' => $githubUser->token,
+                'github_refresh_token' => $githubUser->refreshToken,
+            ]);
+
+            return redirect()->intended(route('home'));
+        }
+
         $user = User::updateOrCreate([
             'github_id' => $githubUser->id,
         ], [
