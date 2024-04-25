@@ -8,7 +8,7 @@ export default function BaseLayout({
 		<div className="min-h-screen flex flex-col bg-white dark:bg-zinc-950 dark:text-white">
 			<Header />
 
-			<main className="flex-1 w-full max-w-5xl mx-auto px-5">
+			<main className="flex flex-col w-full flex-1 max-w-5xl mx-auto mb-8 px-5">
 				{children}
 			</main>
 		</div>

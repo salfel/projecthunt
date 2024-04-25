@@ -1,4 +1,5 @@
 import BaseLayout from "@/Layouts/BaseLayout";
+import AlgoliaPaginator from "@/components/AlgoliaPaginator";
 import ProjectPreview from "@/components/ProjectPreview";
 import { Input } from "@/components/ui/input";
 import { useSearchParam } from "@/lib/hooks";
@@ -8,7 +9,12 @@ import algoliasearch from "algoliasearch";
 import "instantsearch.css/themes/reset.css";
 import { X } from "lucide-react";
 import { useEffect } from "react";
-import { Hits, InstantSearch, useSearchBox } from "react-instantsearch";
+import {
+	Configure,
+	Hits,
+	InstantSearch,
+	useSearchBox,
+} from "react-instantsearch";
 
 const searchClient = algoliasearch(
 	import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -32,7 +38,8 @@ const Index = () => {
 				preserveSharedStateOnUnmount: true,
 			}}
 		>
-			<div className="space-y-5">
+			<Configure hitsPerPage={12} />
+			<div className="flex-1 flex flex-col gap-5">
 				<SearchBox />
 
 				<Hits
@@ -44,6 +51,8 @@ const Index = () => {
 					)}
 				/>
 			</div>
+
+			<AlgoliaPaginator />
 		</InstantSearch>
 	);
 };
