@@ -6,8 +6,8 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { PageProps } from "@/types";
-import { Link, usePage } from "@inertiajs/react";
+import { useUser } from "@/lib/hooks";
+import { Link } from "@inertiajs/react";
 import { UserCircle } from "lucide-react";
 import type React from "react";
 
@@ -35,18 +35,25 @@ export default function Header() {
 }
 
 function Dropdown() {
-	const page = usePage<PageProps>();
+	const user = useUser();
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
-				<UserCircle />
+				{user?.avatar_url ? (
+					<img
+						src={user.avatar_url}
+						alt={user.name}
+						className="size-6"
+					/>
+				) : (
+					<UserCircle />
+				)}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-40 mt-2">
-				{page.props.auth.user ? (
+				{user ? (
 					<>
-						<DropdownMenuLabel>
-							{page.props.auth.user.name}
-						</DropdownMenuLabel>
+						<DropdownMenuLabel>{user.name}</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<Link href={route("project.create")}>
 							<DropdownMenuItem>Create Project</DropdownMenuItem>

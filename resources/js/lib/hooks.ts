@@ -1,3 +1,5 @@
+import type { PageProps } from "@/types";
+import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 export function useSearchParam(key) {
@@ -12,4 +14,10 @@ export function useSearchParam(key) {
 	}, [key]);
 
 	return value;
+}
+
+export function useUser() {
+	const page = usePage<PageProps>();
+
+	return page.props.auth.user;
 }
