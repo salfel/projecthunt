@@ -23,7 +23,7 @@ interface Props extends PageProps {
     tags: string[];
 }
 
-const tagsAtom = atom([]);
+const tagsAtom = atom<string[]>([]);
 
 const Create = ({ repos, tags: defaultTags }: Props) => {
     const [name, setName] = useState(repos[0]);
