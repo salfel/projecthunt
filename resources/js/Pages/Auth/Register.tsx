@@ -11,7 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useForm } from "@inertiajs/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import React, { type FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 
 const Register = () => {
 	return (
@@ -96,6 +96,8 @@ function RegisterForm() {
 	);
 }
 
-Register.layout = (page) => <AuthLayout title="Register">{page}</AuthLayout>;
+Register.layout = (page: ReactNode) => (
+	<AuthLayout title="Register">{page}</AuthLayout>
+);
 
 export default Register;

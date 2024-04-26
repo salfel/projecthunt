@@ -4,6 +4,7 @@ import UpdateGithub from "@/Pages/Profile/Partials/UpdateGithub";
 import UpdatePassword from "@/Pages/Profile/Partials/UpdatePassword";
 import { UpdateProfileInformationForm } from "@/Pages/Profile/Partials/UpdateProfileInformationForm";
 import { Head } from "@inertiajs/react";
+import type { ReactNode } from "react";
 
 const Edit = () => {
 	return (
@@ -19,6 +20,6 @@ const Edit = () => {
 	);
 };
 
-Edit.layout = (page) => <BaseLayout>{page}</BaseLayout>;
+Edit.layout = (page: ReactNode) => <BaseLayout>{page}</BaseLayout>;
 
 export default Edit;

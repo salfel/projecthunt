@@ -15,7 +15,8 @@ import type { PageProps } from "@/types";
 import { Head, router, usePage } from "@inertiajs/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { atom, useAtomValue } from "jotai";
-import React, { type FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
+import type { ReactNode } from "react";
 
 interface Props extends PageProps {
 	repos: string[];
@@ -143,6 +144,6 @@ function SelectRepo({
 	);
 }
 
-Create.layout = (page) => <BaseLayout>{page}</BaseLayout>;
+Create.layout = (page: ReactNode) => <BaseLayout>{page}</BaseLayout>;
 
 export default Create;

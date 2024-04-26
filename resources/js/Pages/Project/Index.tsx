@@ -9,13 +9,14 @@ import { Head } from "@inertiajs/react";
 import algoliasearch from "algoliasearch";
 import "instantsearch.css/themes/reset.css";
 import { X } from "lucide-react";
-import { useEffect } from "react";
+import { type ReactNode, useEffect } from "react";
 import {
 	Configure,
 	Hits,
 	InstantSearch,
 	useSearchBox,
 } from "react-instantsearch";
+import type { Hit } from "instantsearch.js";
 
 const searchClient = algoliasearch(
 	import.meta.env.VITE_ALGOLIA_APP_ID,
@@ -34,7 +35,7 @@ const Index = () => {
 				searchClient={searchClient}
 				initialUiState={{
 					projects: {
-						query,
+						query: query ?? "",
 					},
 				}}
 				future={{
@@ -50,7 +51,7 @@ const Index = () => {
 							list: "grid grid-cols-2 gap-5",
 						}}
 						hitComponent={({ hit }) => (
-							<ProjectPreview project={hit as Project} />
+							<ProjectPreview project={hit as Hit<Project>} />
 						)}
 					/>
 				</div>
@@ -97,6 +98,6 @@ function SearchBox() {
 	);
 }
 
-Index.layout = (page) => <BaseLayout>{page}</BaseLayout>;
+Index.layout = (page: ReactNode) => <BaseLayout>{page}</BaseLayout>;
 
 export default Index;

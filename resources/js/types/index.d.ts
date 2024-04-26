@@ -1,4 +1,4 @@
-export interface User {
+export type User = {
 	id: number;
 	name: string;
 	email: string;
@@ -6,31 +6,20 @@ export interface User {
 	avatar_url: string;
 	github_id: number;
 	hasPassword: string;
-}
+};
 
-export interface Project {
+export type Project = {
 	id: number;
 	name: string;
 	full_name: string;
 	description: string;
 	user?: User;
 	tags: Tag[];
-}
-
-export interface Tag {
-	id: number;
-	name: string;
-}
-
-type File = {
-	name: string;
-	path: string;
-	type: "dir" | "file";
 };
 
-type FileContent = {
-	content: string;
-	fileType: string;
+export type Tag = {
+	id: number;
+	name: string;
 };
 
 export type PageProps<

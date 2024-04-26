@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { useUser } from "@/lib/hooks";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import React from "react";
 
 export default function UpdateGithub() {
 	const user = useUser();

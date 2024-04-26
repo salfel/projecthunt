@@ -58,11 +58,11 @@ function Dropdown() {
 						<Link href={route("profile.edit")}>
 							<DropdownMenuItem>Profile</DropdownMenuItem>
 						</Link>
-						<Link href={route("projects.create")}>
-							<DropdownMenuItem>Create Project</DropdownMenuItem>
+						<Link href={route("projects.user", [user.id])}>
+							<DropdownMenuItem>My Projects</DropdownMenuItem>
 						</Link>
 						<DropdownMenuSeparator />
-						<Link href={route("logout")} method="post">
+						<Link href={route("logout")} method="post" as="button">
 							<DropdownMenuItem>Logout</DropdownMenuItem>
 						</Link>
 					</>

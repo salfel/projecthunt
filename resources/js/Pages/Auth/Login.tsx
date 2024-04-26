@@ -11,7 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useForm } from "@inertiajs/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import type { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 
 const Login = () => {
 	return (
@@ -78,6 +78,8 @@ function LoginForm() {
 	);
 }
 
-Login.layout = (page) => <AuthLayout title="Login">{page}</AuthLayout>;
+Login.layout = (page: ReactNode) => (
+	<AuthLayout title="Login">{page}</AuthLayout>
+);
 
 export default Login;

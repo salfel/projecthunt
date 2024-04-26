@@ -9,7 +9,7 @@ import {
 	StarFilledIcon,
 	StarIcon,
 } from "@radix-ui/react-icons";
-import React from "react";
+import type { ReactNode } from "react";
 
 interface Props extends PageProps {
 	project: Project;
@@ -49,8 +49,6 @@ function ProjectActions({
 				href={route("projects.star", [project.id])}
 				method="post"
 				as="button"
-				size="icon"
-				variant="outline"
 				className={buttonVariants({ variant: "ghost", size: "icon" })}
 			>
 				{starred ? (
@@ -69,6 +67,6 @@ function ProjectActions({
 	);
 }
 
-Show.layout = (page) => <BaseLayout>{page}</BaseLayout>;
+Show.layout = (page: ReactNode) => <BaseLayout>{page}</BaseLayout>;
 
 export default Show;
