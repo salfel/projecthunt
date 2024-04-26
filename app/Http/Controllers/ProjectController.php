@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 use App\Models\Tag;
+use App\Models\User;
 use Github\Exception\RuntimeException;
 use GrahamCampbell\GitHub\Facades\GitHub;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -16,16 +16,27 @@ use Inertia\Response;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         return Inertia::render('Project/Index');
+    }
+
+    public function user(User $user)
+    {
+        $projects = $user->projects()->with(['user', 'tags'])->paginate(12);
+
+        return Inertia::render('Project/User', [
+            'projects' => $projects,
+        ]);
     }
 
     public function create(): Response
     {
         Gate::authorize('create', Project::class);
 
+        /** @var User $user */
         $user = Auth::user();
+
         $repos = Github::user()->repositories($user->githubUsername());
         $repos = array_map(fn (array $repo) => $repo['name'], $repos);
 
@@ -39,11 +50,12 @@ class ProjectController extends Controller
     {
         Gate::authorize('create', Project::class);
 
+        /** @var User $user */
         $user = Auth::user();
 
         try {
             $repo = GitHub::repo()->show($user->github()['login'], $request->name);
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             return redirect()->route('projects.create');
         }
 

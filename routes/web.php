@@ -11,6 +11,9 @@ Route::get('/', HomeController::class)
 Route::resource('projects', ProjectController::class)
     ->middleware(['create' => 'auth']);
 
+Route::get('projects/user/{user}', [ProjectController::class, 'user'])
+    ->name('projects.user');
+
 Route::post('projects/{project}/star', [ProjectController::class, 'star'])
     ->middleware('auth')
     ->name('projects.star');
