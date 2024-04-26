@@ -9,6 +9,7 @@ import {
 	StarFilledIcon,
 	StarIcon,
 } from "@radix-ui/react-icons";
+import { Globe } from "lucide-react";
 import type { ReactNode } from "react";
 
 interface Props extends PageProps {
@@ -45,6 +46,17 @@ function ProjectActions({
 }: { project: Project; starred: boolean }) {
 	return (
 		<div className="absolute top-0 right-5 !m-0 flex items-center gap-1">
+			{project.demo && (
+				<a
+					href={project.demo}
+					className={buttonVariants({
+						variant: "ghost",
+						size: "icon",
+					})}
+				>
+					<Globe className="size-5" />
+				</a>
+			)}
 			<Link
 				href={route("projects.star", [project.id])}
 				method="post"
