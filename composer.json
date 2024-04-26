@@ -11,12 +11,15 @@
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
+        "laravel/octane": "^2.3",
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.8",
         "laravel/socialite": "^5.13",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.9",
         "laravel/vapor-core": "^2.37",
+        "spiral/roadrunner-cli": "^2.6.0",
+        "spiral/roadrunner-http": "^3.3.0",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
