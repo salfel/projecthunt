@@ -2,7 +2,6 @@ import BaseLayout from "@/Layouts/BaseLayout";
 import FormField from "@/components/FormField";
 import TagsInput from "@/components/TagInput";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import {
 	Select,
@@ -26,7 +25,6 @@ type FormProps = {
 	name: string;
 	description: string;
 	demo: string;
-	useGithubDesc: boolean;
 	tags: string[];
 };
 
@@ -36,7 +34,6 @@ const Create = ({ repos }: Props) => {
 		name: "",
 		description: "",
 		demo: "",
-		useGithubDesc: false,
 		tags: [],
 	});
 
@@ -87,36 +84,17 @@ const Create = ({ repos }: Props) => {
 
 					<div className="space-y-1">
 						<Label htmlFor="description">Description</Label>
-						{!data.useGithubDesc && (
-							<Textarea
-								id="description"
-								value={data.description}
-								onChange={(e) =>
-									setData({
-										...data,
-										description: e.target.value,
-									})
-								}
-								rows={4}
-							/>
-						)}
-
-						<div className="flex items-center gap-2 !mt-3 !mb-2">
-							<Checkbox
-								id="useGithubDesc"
-								checked={data.useGithubDesc}
-								onCheckedChange={(checked) =>
-									setData({
-										...data,
-										useGithubDesc: !!checked,
-									})
-								}
-							/>
-
-							<Label htmlFor="useGithubDesc">
-								Use Github description
-							</Label>
-						</div>
+						<Textarea
+							id="description"
+							value={data.description}
+							onChange={(e) =>
+								setData({
+									...data,
+									description: e.target.value,
+								})
+							}
+							rows={4}
+						/>
 
 						{page.props.errors.description && (
 							<span className="text-red-500 text-sm">

@@ -8,20 +8,12 @@ class ProjectRequest extends FormRequest
 {
     public function rules(): array
     {
-        $rules = [
+        return [
             'name' => ['required', 'string'],
             'demo' => ['url', 'nullable'],
-            'useGithubDesc' => ['boolean'],
+            'description' => ['required', 'string', 'min:16'],
             'tags' => ['required', 'array'],
         ];
-
-        if ($this->input('useGithubDesc')) {
-            $rules['description'] = ['nullable', 'string'];
-        } else {
-            $rules['description'] = ['required', 'string', 'min:16'];
-        }
-
-        return $rules;
     }
 
     public function authorize(): bool
