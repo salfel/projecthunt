@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
-use App\Models\Tag;
 use App\Models\User;
 use Github\Exception\RuntimeException;
 use GrahamCampbell\GitHub\Facades\GitHub;
@@ -23,7 +22,7 @@ class ProjectController extends Controller
 
     public function user(User $user)
     {
-        $projects = $user->projects()->with(['user', 'tags'])->withCount('starred')->paginate(12);
+        $projects = $user->projects()->with(['user'])->withCount('starred')->paginate(12);
 
         return Inertia::render('Project/User', [
             'projects' => $projects,
@@ -42,7 +41,6 @@ class ProjectController extends Controller
 
         return Inertia::render('Project/Create', [
             'repos' => $repos,
-            'tags' => config('tags'),
         ]);
     }
 
@@ -76,17 +74,12 @@ class ProjectController extends Controller
 
         $project = Project::create($data);
 
-        $tags = Tag::whereIn('name', $request->tags)->get();
-        $project->tags()->attach($tags);
-
-        $project->refresh()->searchable();
-
         return redirect()->route('projects.show', [$project->id]);
     }
 
     public function show(int $id): Response
     {
-        $project = Project::with(['user', 'tags'])->findOrFail($id);
+        $project = Project::with(['user'])->findOrFail($id);
 
         return Inertia::render('Project/Show', [
             'project' => $project,

@@ -15,13 +15,8 @@ export type Project = {
 	full_name: string;
 	description: string;
 	user?: User;
-	tags: Tag[];
+	tags: string[];
 	starred_count: number;
-};
-
-export type Tag = {
-	id: number;
-	name: string;
 };
 
 export type Pagination<T> = {

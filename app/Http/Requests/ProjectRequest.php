@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class ProjectRequest extends FormRequest
 {
@@ -11,9 +10,9 @@ class ProjectRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'string'],
-            'demo' => ['url'],
+            'demo' => ['url', 'nullable'],
             'useGithubDesc' => ['boolean'],
-            'tags' => ['required', 'array', Rule::in(config('tags'))],
+            'tags' => ['required', 'array'],
         ];
 
         if ($this->input('useGithubDesc')) {

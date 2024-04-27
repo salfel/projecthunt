@@ -17,6 +17,11 @@ class Project extends Model
         'demo',
         'user_id',
         'full_name',
+        'tags',
+    ];
+
+    protected $casts = [
+        'tags' => 'array',
     ];
 
     public function searchableAs(): string
@@ -31,7 +36,7 @@ class Project extends Model
             'name' => $this->name,
             'description' => $this->description,
             'user' => $this->user->toArray(),
-            'tags' => $this->tags->toArray(),
+            'tags' => $this->tags,
             'starred_count' => $this->starred_count,
         ];
     }
@@ -42,14 +47,6 @@ class Project extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * @return BelongsToMany<Tag>
-     */
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(Tag::class);
     }
 
     /**

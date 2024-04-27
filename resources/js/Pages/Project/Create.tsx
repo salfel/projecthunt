@@ -15,15 +15,12 @@ import { Textarea } from "@/components/ui/textarea";
 import type { PageProps } from "@/types";
 import { Head, useForm, usePage } from "@inertiajs/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { atom, useAtom } from "jotai";
-import { useEffect, type FormEvent, type ReactNode } from "react";
+import type { FormEvent, ReactNode } from "react";
 
 interface Props extends PageProps {
 	repos: string[];
 	tags: string[];
 }
-
-const tagsAtom = atom<string[]>([]);
 
 type FormProps = {
 	name: string;
@@ -33,7 +30,7 @@ type FormProps = {
 	tags: string[];
 };
 
-const Create = ({ repos, tags: defaultTags }: Props) => {
+const Create = ({ repos }: Props) => {
 	const page = usePage();
 	const { data, setData, post } = useForm<FormProps>({
 		name: "",
@@ -42,20 +39,11 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 		useGithubDesc: false,
 		tags: [],
 	});
-	const [tags, setTags] = useAtom(tagsAtom);
-
-	useEffect(() => {
-		setData("tags", tags);
-	}, [tags, setData]);
 
 	function handleSubmit(e: FormEvent) {
 		e.preventDefault();
 
-		post(route("projects.store"), {
-			onSuccess: () => {
-				setTags([]);
-			},
-		});
+		post(route("projects.store"));
 	}
 
 	return (
@@ -70,7 +58,7 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 					</p>
 				</div>
 				<form onSubmit={handleSubmit} className="space-y-5">
-					<div className="flex items-center justify-between gap-5">
+					<div className="flex justify-between gap-5">
 						<div className="space-y-1 w-full">
 							<Label htmlFor="repository" required>
 								Repository
@@ -93,6 +81,7 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 							placeholder="https://example.com"
 							value={data.demo}
 							setData={setData}
+							error={page.props.errors.demo}
 						/>
 					</div>
 
@@ -136,21 +125,7 @@ const Create = ({ repos, tags: defaultTags }: Props) => {
 						)}
 					</div>
 
-					<div className="space-y-1">
-						<Label htmlFor="tags" required>
-							Tags
-						</Label>
-						<TagsInput
-							defaultTags={defaultTags}
-							tagsAtom={tagsAtom}
-						/>
-
-						{page.props.errors.tags && (
-							<span className="text-red-500 text-sm">
-								{page.props.errors.tags}
-							</span>
-						)}
-					</div>
+					<TagsInput tags={data.tags} setData={setData} />
 
 					<Button type="submit">Create Project</Button>
 				</form>

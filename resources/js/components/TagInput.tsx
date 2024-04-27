@@ -1,131 +1,73 @@
 import { Badge } from "@/components/ui/badge";
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-} from "@/components/ui/command";
-import { cn } from "@/lib/utils";
-import type { PrimitiveAtom } from "jotai";
-import { useAtom } from "jotai";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+import FormField from "./FormField";
+import { usePage } from "@inertiajs/react";
 
 type Props = {
-    defaultTags: string[];
-    tagsAtom: PrimitiveAtom<string[]>;
+	tags: string[];
+	setData: (key: string, value: unknown) => void;
 };
 
-export default function TagInput({ defaultTags, tagsAtom }: Props) {
-    return (
-        <div>
-            <TagCommand defaultTags={defaultTags} tagsAtom={tagsAtom} />
+export default function TagInput({ tags, setData }: Props) {
+	const [value, setValue] = useState("");
+	const page = usePage();
 
-            <BadgeList tagsAtom={tagsAtom} />
-        </div>
-    );
-}
+	function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+		if (e.key !== "Enter") return;
+		e.preventDefault();
 
-function TagCommand({
-    defaultTags,
-    tagsAtom,
-}: {
-    defaultTags: string[];
-    tagsAtom: PrimitiveAtom<string[]>;
-}) {
-    const [tags, setTags] = useAtom(tagsAtom);
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
-    const command = useRef<HTMLDivElement | null>(null);
+		setValue("");
 
-    useEffect(() => {
-        function checkClickedOutside(event: MouseEvent) {
-            // @ts-ignore
-            if (open && !command.current?.contains(event.target)) {
-                setOpen(false);
-            }
-        }
+		if (tags.includes(value)) return;
 
-        function checkEscape(event: KeyboardEvent) {
-            if (open && event.key === "Escape") {
-                setOpen(false);
-            }
-        }
+		setData("tags", [...tags, value]);
+	}
 
-        document.addEventListener("click", checkClickedOutside);
-        document.addEventListener("keydown", checkEscape);
-        return () => {
-            document.removeEventListener("click", checkClickedOutside);
-            document.removeEventListener("keydown", checkEscape);
-        };
-    }, [open]);
+	return (
+		<div>
+			<FormField
+				id="tags"
+				label="Tags"
+				value={value}
+				setData={(_: string, value: unknown) =>
+					setValue(value as string)
+				}
+				onKeyDown={handleKeyDown}
+				error={page.props.errors.tags}
+				required
+			/>
 
-    return (
-        <Command
-            className="relative overflow-visible w-96 rounded-md border border-zinc-800"
-            ref={command}
-        >
-            <CommandInput
-                id="tags"
-                value={value}
-                onFocus={() => setOpen(true)}
-                onValueChange={(value) => {
-                    setValue(value);
-                    setOpen(true);
-                }}
-                placeholder="Search tags..."
-            />
-            <CommandList
-                className={cn(
-                    "absolute top-12 w-96 bg-white dark:bg-zinc-950 rounded-md border border-zinc-200 dark:border-zinc-800 hide-scrollbar",
-                    !open && "hidden",
-                )}
-            >
-                <CommandEmpty>No framework found.</CommandEmpty>
-                <CommandGroup>
-                    {defaultTags
-                        .filter((t) => !tags.includes(t))
-                        .map((tag) => (
-                            <CommandItem
-                                key={tag}
-                                value={tag}
-                                onSelect={(currentValue) => {
-                                    setTags([...tags, currentValue]);
-                                    setOpen(false);
-                                    setValue("");
-                                }}
-                            >
-                                {tag}
-                            </CommandItem>
-                        ))}
-                </CommandGroup>
-            </CommandList>
-        </Command>
-    );
+			<BadgeList tags={tags} setData={setData} />
+		</div>
+	);
 }
 
 function BadgeList({
-    tagsAtom,
+	tags,
+	setData,
 }: {
-    tagsAtom: PrimitiveAtom<string[]>;
+	tags: string[];
+	setData: (key: string, value: unknown) => void;
 }) {
-    const [tags, setTags] = useAtom(tagsAtom);
-
-    return (
-        tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 w-96 mt-4">
-                {tags.map((tag) => (
-                    <Badge
-                        key={tag}
-                        onClick={() => setTags(tags.filter((t) => t !== tag))}
-                        className="cursor-pointer"
-                        variant="secondary"
-                    >
-                        {tag}
-                    </Badge>
-                ))}
-            </div>
-        )
-    );
+	return (
+		tags.length > 0 && (
+			<div className="flex flex-wrap gap-1 w-96 mt-4">
+				{tags.map((tag) => (
+					<Badge
+						key={tag}
+						onClick={() =>
+							setData(
+								"tags",
+								tags.filter((t) => t !== tag),
+							)
+						}
+						className="cursor-pointer"
+						variant="secondary"
+					>
+						{tag}
+					</Badge>
+				))}
+			</div>
+		)
+	);
 }

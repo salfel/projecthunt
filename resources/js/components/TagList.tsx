@@ -1,19 +1,17 @@
 import { Badge } from "@/components/ui/badge";
-import type { Tag } from "@/types";
 import { Link } from "@inertiajs/react";
-import React from "react";
 
-export default function TagList({ tags }: { tags: Tag[] }) {
+export default function TagList({ tags }: { tags: string[] }) {
 	return (
 		<div className="flex flex-wrap gap-2">
 			{tags.map((tag) => (
 				<Link
-					key={tag.id}
+					key={tag}
 					href={`${route("projects.index")}?q=${encodeURIComponent(
-						tag.name,
+						tag,
 					)}`}
 				>
-					<Badge>{tag.name}</Badge>
+					<Badge>{tag}</Badge>
 				</Link>
 			))}
 		</div>
