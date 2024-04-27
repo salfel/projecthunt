@@ -43,7 +43,7 @@ const Index = () => {
 				}}
 			>
 				<Configure hitsPerPage={12} />
-				<div className="flex-1 flex flex-col gap-5">
+				<div className="flex-1 flex flex-col gap-5 mb-8">
 					<SearchBox />
 
 					<Hits

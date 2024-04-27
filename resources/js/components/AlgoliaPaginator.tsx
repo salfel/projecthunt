@@ -6,7 +6,6 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
-import React from "react";
 import { usePagination } from "react-instantsearch";
 
 export default function AlgoliaPaginator() {
@@ -18,37 +17,40 @@ export default function AlgoliaPaginator() {
 	}
 
 	return (
-		<div className="mt-full">
-			<Pagination>
-				<PaginationContent>
-					<PaginationItem>
-						<PaginationPrevious
-							onClick={() =>
-								!isFirstPage && refine(currentRefinement - 1)
-							}
-							href="#"
-						/>
-					</PaginationItem>
-					{pages.map((page) => (
-						<PaginationItem key={page}>
-							<Button
-								variant={isActive(page)}
-								onClick={() => refine(page)}
-							>
-								{page + 1}
-							</Button>
+		pages.length > 1 && (
+			<div className="mt-full">
+				<Pagination>
+					<PaginationContent>
+						<PaginationItem>
+							<PaginationPrevious
+								onClick={() =>
+									!isFirstPage &&
+									refine(currentRefinement - 1)
+								}
+								href="#"
+							/>
 						</PaginationItem>
-					))}
-					<PaginationItem>
-						<PaginationNext
-							href="#"
-							onClick={() =>
-								!isLastPage && refine(currentRefinement + 1)
-							}
-						/>
-					</PaginationItem>
-				</PaginationContent>
-			</Pagination>
-		</div>
+						{pages.map((page) => (
+							<PaginationItem key={page}>
+								<Button
+									variant={isActive(page)}
+									onClick={() => refine(page)}
+								>
+									{page + 1}
+								</Button>
+							</PaginationItem>
+						))}
+						<PaginationItem>
+							<PaginationNext
+								href="#"
+								onClick={() =>
+									!isLastPage && refine(currentRefinement + 1)
+								}
+							/>
+						</PaginationItem>
+					</PaginationContent>
+				</Pagination>
+			</div>
+		)
 	);
 }
