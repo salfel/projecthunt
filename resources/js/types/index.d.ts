@@ -39,8 +39,8 @@ export type Pagination<T> = {
 	path: string;
 	per_page: number;
 	prev_page_url: string | null;
-	to: 1;
-	total: 1;
+	to: number;
+	total: number;
 };
 
 export type PageProps<
