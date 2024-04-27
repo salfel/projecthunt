@@ -23,7 +23,7 @@ class ProjectController extends Controller
 
     public function user(User $user)
     {
-        $projects = $user->projects()->with(['user', 'tags'])->paginate(12);
+        $projects = $user->projects()->with(['user', 'tags'])->withCount('starred')->paginate(12);
 
         return Inertia::render('Project/User', [
             'projects' => $projects,

@@ -32,6 +32,7 @@ class Project extends Model
             'description' => $this->description,
             'user' => $this->user->toArray(),
             'tags' => $this->tags->toArray(),
+            'starred_count' => $this->starred_count,
         ];
     }
 

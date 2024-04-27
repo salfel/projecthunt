@@ -16,6 +16,7 @@ export type Project = {
 	description: string;
 	user?: User;
 	tags: Tag[];
+	starred_count: number;
 };
 
 export type Tag = {
