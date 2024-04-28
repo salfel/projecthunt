@@ -19,5 +19,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'felix.salcher@gmail.com',
             'password' => bcrypt('password'),
         ]);
+
+        User::factory(5)->create();
+
+        $this->call(ProjectSeeder::class);
     }
 }
