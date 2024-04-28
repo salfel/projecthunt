@@ -10,8 +10,7 @@ Route::get('/', HomeController::class)
     ->name('home');
 
 Route::resource('projects', ProjectController::class)
-    ->except('show')
-    ->middleware(['create' => 'auth']);
+    ->except('show');
 
 Route::prefix('projects/{project}')->group(function () {
     Route::get('/', [ShowProjectsController::class, 'home'])
@@ -39,4 +38,4 @@ Route::prefix('profile')->middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
