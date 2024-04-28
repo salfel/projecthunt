@@ -15,7 +15,7 @@ class ShowProjectsController extends Controller
 
         return Inertia::render('Project/Show/Home', [
             'project' => $project,
-            'starred' => $project->isStarred(Auth::id()),
+            'starred' => Auth::check() && $project->isStarred(Auth::id()),
         ]);
     }
 
