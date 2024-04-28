@@ -66,6 +66,16 @@ class ProjectController extends Controller
         return redirect()->route('projects.show', [$project->id]);
     }
 
+    public function Show(Project $project): Response
+    {
+        $project->load('user');
+
+        return Inertia::render('Project/Show', [
+            'project' => $project,
+            'starred' => Auth::check() && $project->isStarred(Auth::id()),
+        ]);
+    }
+
     public function star(Project $project): RedirectResponse
     {
         $starred = $project->isStarred(Auth::id());

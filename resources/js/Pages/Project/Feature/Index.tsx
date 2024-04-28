@@ -1,15 +1,15 @@
 import BaseLayout from "@/Layouts/BaseLayout";
+import ProjectLayout from "@/Layouts/ProjectLayout";
 import type { ReactNode } from "react";
-import Layout from "./Layout";
 
 function Features() {
-	return <div>Feature</div>;
+    return <div>Feature</div>;
 }
 
 Features.layout = (page: ReactNode) => (
-	<BaseLayout>
-		<Layout>{page}</Layout>
-	</BaseLayout>
+    <BaseLayout>
+        <ProjectLayout>{page}</ProjectLayout>
+    </BaseLayout>
 );
 
 export default Features;
