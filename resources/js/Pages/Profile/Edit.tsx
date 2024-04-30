@@ -7,17 +7,17 @@ import { Head } from "@inertiajs/react";
 import type { ReactNode } from "react";
 
 const Edit = () => {
-	return (
-		<>
-			<Head title="Profile" />
-			<div className="space-y-8">
-				<UpdateProfileInformationForm />
-				<UpdateGithub />
-				<UpdatePassword />
-				<DeleteUser />
-			</div>
-		</>
-	);
+    return (
+        <>
+            <Head title="Profile" />
+            <div className="space-y-8">
+                <UpdateProfileInformationForm />
+                <UpdateGithub />
+                <UpdatePassword />
+                <DeleteUser />
+            </div>
+        </>
+    );
 };
 
 Edit.layout = (page: ReactNode) => <BaseLayout>{page}</BaseLayout>;
