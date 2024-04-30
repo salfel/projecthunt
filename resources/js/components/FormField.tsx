@@ -18,13 +18,15 @@ const FormField = React.forwardRef<HTMLInputElement, FormFieldProps>(
 				<Label htmlFor={id} required={required}>
 					{label}
 				</Label>
-				<Input
-					id={id}
-					value={value}
-					onChange={(e) => setData(id, e.target.value)}
-					ref={ref}
-					{...props}
-				/>
+				{props.children || (
+					<Input
+						id={id}
+						value={value}
+						onChange={(e) => setData(id, e.target.value)}
+						ref={ref}
+						{...props}
+					/>
+				)}
 				{error && <span className="text-red-500 text-sm">{error}</span>}
 			</div>
 		);

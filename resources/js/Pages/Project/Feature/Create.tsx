@@ -1,5 +1,6 @@
 import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import BaseLayout from "@/Layouts/BaseLayout";
@@ -44,19 +45,17 @@ function Create({ project }: Props) {
 					error={errors.name}
 				/>
 
-				<div className="space-y-1 w-full">
-					<Label htmlFor="description">Description</Label>
-					<Input
+				<FormField
+					id="description"
+					label="Description"
+					error={errors.description}
+				>
+					<Textarea
 						id="description"
 						value={data.description}
-						onChange={(e) => setData("description", e.target.value)}
+						setData={(e) => setData("description", e.target.value)}
 					/>
-					{errors.description && (
-						<span className="text-red-500 text-sm">
-							{errors.description}
-						</span>
-					)}
-				</div>
+				</FormField>
 
 				<Button type="submit" size="sm" disabled={processing}>
 					Create Project
