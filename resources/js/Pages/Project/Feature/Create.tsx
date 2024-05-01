@@ -1,8 +1,6 @@
 import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import BaseLayout from "@/Layouts/BaseLayout";
 import type { Project } from "@/types";
 import { useForm } from "@inertiajs/react";
@@ -53,7 +51,7 @@ function Create({ project }: Props) {
 					<Textarea
 						id="description"
 						value={data.description}
-						setData={(e) => setData("description", e.target.value)}
+						onChange={(e) => setData("description", e.target.value)}
 					/>
 				</FormField>
 
