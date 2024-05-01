@@ -7,7 +7,6 @@ use App\Models\Feature;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -33,8 +32,7 @@ class FeatureController extends Controller
 
     public function store(Project $project, FeatureRequest $request): RedirectResponse
     {
-        Log::info('project', $project->toArray());
-        // Gate::authorize('create', [Feature::class, $project]);
+        Gate::authorize('create', [Feature::class, $project]);
 
         Feature::create([
             ...$request->validated(),
@@ -42,5 +40,32 @@ class FeatureController extends Controller
         ]);
 
         return redirect()->route('projects.features.index', [$project->id]);
+    }
+
+    public function edit(Feature $feature)
+    {
+        Gate::authorize('update', $feature);
+
+        return Inertia::render('Project/Feature/Edit', [
+            'feature' => $feature,
+        ]);
+    }
+
+    public function update(Feature $feature, FeatureRequest $request): RedirectResponse
+    {
+        Gate::authorize('update', $feature);
+
+        $feature->update($request->validated());
+
+        return redirect()->route('projects.features.index', [$feature->project_id]);
+    }
+
+    public function destroy(Feature $feature): RedirectResponse
+    {
+        Gate::authorize('delete', $feature);
+
+        $feature->delete();
+
+        return redirect()->route('projects.features.index', [$feature->project_id]);
     }
 }
