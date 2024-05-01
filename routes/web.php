@@ -11,7 +11,7 @@ Route::get('/', HomeController::class)
 
 Route::resource('projects', ProjectController::class);
 
-Route::resource('projects.features', FeatureController::class);
+Route::resource('projects.features', FeatureController::class)->shallow();
 
 Route::get('projects/user/{user}', [ProjectController::class, 'user'])
     ->name('projects.user');
@@ -31,4 +31,4 @@ Route::prefix('profile')->middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
